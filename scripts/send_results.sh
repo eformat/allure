@@ -10,7 +10,7 @@ Send test results to an Allure server instance
 
 Required:
    ALLURE_PROJECT       Allure project name used in /projects create
-   DIRECTORY            Directory containing allure-results/ folder (normally '.' or `pwd`)
+   DIRECTORY            Directory containing target/allure-results folder (normally '.' or `pwd`)
    ALLURE_USER          Allure user
    ALLURE_PASS          Allure password
    ALLURE_HOST          Allure host
@@ -29,7 +29,7 @@ cleanup () {
 }
 
 # This directory is where you have all your results locally, generally named as `allure-results`
-ALLURE_RESULTS_DIRECTORY='allure-results'
+ALLURE_RESULTS_DIRECTORY='target/allure-results'
 # Project ID. Check endpoint for project creation >> `[POST]/projects`
 PROJECT_ID=${1}
 DIR=${2}
@@ -66,7 +66,7 @@ if [ -z ${ACCESS_TOKEN} ] || [ -z ${CSRF_TOKEN} ]; then
 fi
 
 # create project, ok if exists already
-curl -X POST -H "X-CSRF-TOKEN: ${CSRF_TOKEN}" --cookie "access_token_cookie=${ACCESS_TOKEN}" "${ALLURE_SERVER}/allure-docker-service/projects" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":\"${ALLURE_PROJECT}\"}"
+curl -X POST -H "X-CSRF-TOKEN: ${CSRF_TOKEN}" --cookie "access_token_cookie=${ACCESS_TOKEN}" "${ALLURE_SERVER}/allure-docker-service/projects" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":\"${PROJECT_ID}\"}"
 
 FILES_TO_SEND=$(ls -dp $DIR/$ALLURE_RESULTS_DIRECTORY/* | grep -v /$)
 if [ -z "$FILES_TO_SEND" ]; then
