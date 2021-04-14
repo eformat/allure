@@ -20,14 +20,18 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - serviceaccounts
-      - secrets
       - pods
-      - services
     verbs:
       - get
       - list
       - watch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - pods/exec
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -39,7 +43,7 @@ metadata:
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: patch-allure-ds-{{ .Release.Name }}-{{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -60,7 +64,7 @@ spec:
   template:
     spec:
       containers:
-        - image: quay.io/openshift/origin-cli:latest
+        - image: quay.io/eformat/jenkins-agent-graalvm:latest
           command:
             - /bin/bash
             - -c
@@ -71,8 +75,11 @@ spec:
               sleep 5s
               echo "Patching allure swagger data"
               cd /tmp
-              
-              oc cp /tmp/swagger/ $(oc get pods -l deployment=allure --template='{{range .items}}{{.metadata.name}}{{end}}'):/app/allure-docker-api/static
+              git clone https://github.com/eformat/allure.git && cd allure
+              podname=$(oc get pods -l app.kubernetes.io/instance={{ .Release.Name }} -o name)
+              oc cp docker/swagger/ ${podname##pod/}:/app/allure-docker-api/static
+              oc delete pod -l app.kubernetes.io/instance={{ .Release.Name }}
+              oc wait $(oc get pod -l app.kubernetes.io/instance={{ .Release.Name }} -o name) --for=condition=Ready --timeout=300s
               exit $?
           imagePullPolicy: Always
           name: patch-allure-ds
