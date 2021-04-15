@@ -20,7 +20,7 @@ persistence:
     annotations: {}
     storageClass:
     accessMode: ReadWriteOnce
-    size: 1Gi
+    size: 10Gi
     mountPath: /app/projects
     storageClass: gp2
   allure_swagger:
