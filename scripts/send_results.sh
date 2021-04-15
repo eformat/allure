@@ -55,6 +55,11 @@ if [ -z ${PROJECT_ID} ] || [ -z ${DIR} ] || [ -z ${ALLURE_USER} ] || [ -z ${ALLU
     usage
 fi
 
+if [ ! -d "${DIR}/${ALLURE_RESULTS_DIRECTORY}" ]; then
+   echo "Could not find directory ${DIR}/${ALLURE_RESULTS_DIRECTORY} exiting."
+   exit 0;
+fi
+
 # login
 curl -sk -X POST "${ALLURE_SERVER}/allure-docker-service/login" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"username\": \"admin\",\"password\":\"password\"}" -ik | tr -d '\r' | tee /tmp/login.txt
 ACCESS_TOKEN=$(cat /tmp/login.txt | grep access_token_cookie | sed 's/Set-Cookie: access_token_cookie=//g' | sed 's/\; HttpOnly\; Path=\///g')
