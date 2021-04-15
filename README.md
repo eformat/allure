@@ -18,7 +18,7 @@ Check the `values.yaml` file for settings e.g. persistent volumes.
 The scripts file can be used to send results from `target/allure-results` directory. It logs in to allure, creates a project called `my-app-name` and sends the test report results.
 
 ```bash
-send_results.sh my-app-name `pwd` admin changme $ALLURE_H
+send_results.sh my-app-name `pwd` admin changme $ALLURE_HOST
 ```
 
 Tested using the allure-maven plugin, but many languages are supported.
