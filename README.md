@@ -11,6 +11,8 @@ Install from source chart
 helm upgrade myallure --set security.user=admin --set security.password=changeme --create-namespace --namespace=allure --install .
 ```
 
+Check the `values.yaml` file for settings e.g. persistent volumes.
+
 ## Sending test results
 
 The scripts file can be used to send results from `target/allure-results` directory. It logs in to allure, creates a project called `my-app-name` and sends the test report results.
