@@ -71,7 +71,7 @@ if [ -z ${ACCESS_TOKEN} ] || [ -z ${CSRF_TOKEN} ]; then
 fi
 
 # create project, ok if exists already
-curl -X POST -H "X-CSRF-TOKEN: ${CSRF_TOKEN}" --cookie "access_token_cookie=${ACCESS_TOKEN}" "${ALLURE_SERVER}/allure-docker-service/projects" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":\"${PROJECT_ID}\"}"
+curl -k -X POST -H "X-CSRF-TOKEN: ${CSRF_TOKEN}" --cookie "access_token_cookie=${ACCESS_TOKEN}" "${ALLURE_SERVER}/allure-docker-service/projects" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":\"${PROJECT_ID}\"}"
 
 FILES_TO_SEND=$(ls -dp $DIR/$ALLURE_RESULTS_DIRECTORY/* | grep -v /$)
 if [ -z "$FILES_TO_SEND" ]; then
