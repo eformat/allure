@@ -64,7 +64,7 @@ spec:
   template:
     spec:
       containers:
-        - image: quay.io/eformat/jenkins-agent-graalvm:latest
+        - image: quay.io/openshift/origin-cli:4.8
           command:
             - /bin/bash
             - -c
