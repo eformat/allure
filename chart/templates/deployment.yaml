@@ -35,10 +35,23 @@ spec:
           value: {{ .Values.make_viewer_endpoints_public | quote }}
         - name: SECURITY_ENABLED
           value: {{ .Values.security.enabled | quote }}
+        {{- if .Values.security.secret }}
+        - name: SECURITY_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.security.secret }}
+              key: username
+        - name: SECURITY_PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.security.secret }}
+              key: password
+        {{- else }}
         - name: SECURITY_PASS
           value: {{ .Values.security.password | quote }}
         - name: SECURITY_USER
-          value: {{ .Values.security.user | quote }}
+          value: {{ .Values.security.user | quote }} 
+        {{- end }}
         image: ' '
         imagePullPolicy: Always
         name: allure
