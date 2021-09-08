@@ -6,6 +6,7 @@ security:
   enabled: 1
   password: password
   user: admin
+  secret: '' #when you have secret object defined with username/password info ie SealedSecrets
 image_repository: quay.io
 image_name: allure
 image_namespace: eformat
