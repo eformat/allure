@@ -4,7 +4,7 @@
 
 usage() {
   cat <<EOF 2>&1
-usage: $0 [ -h | -v ] <ALLURE_PROJECT> <DIRECTORY> <ALLURE_USER> <ALLURE_PASS> <ALLURE_HOST>
+usage: $0 [ -h | -v ] <ALLURE_PROJECT> <DIRECTORY> <ALLURE_USER> <ALLURE_PASS> <ALLURE_HOST> <ALLURE_RESULTS_DIRECTORY>
 
 Send test results to an Allure server instance
 
