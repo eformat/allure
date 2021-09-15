@@ -9,11 +9,12 @@ usage: $0 [ -h | -v ] <ALLURE_PROJECT> <DIRECTORY> <ALLURE_USER> <ALLURE_PASS> <
 Send test results to an Allure server instance
 
 Required:
-   ALLURE_PROJECT       Allure project name used in /projects create
-   DIRECTORY            Directory containing target/allure-results folder (normally '.' or `pwd`)
-   ALLURE_USER          Allure user
-   ALLURE_PASS          Allure password
-   ALLURE_HOST          Allure host
+   ALLURE_PROJECT                Allure project name used in /projects create
+   DIRECTORY                     Directory containing the allure results folder (normally . or `pwd`)
+   ALLURE_USER                   Allure user
+   ALLURE_PASS                   Allure password
+   ALLURE_HOST                   Allure host (default: http://localhost:5050)
+   ALLURE_RESULTS_DIRECTORY      Directory where you have all your results locally (default: target/allure-results)
 
 Optional:
    -h  help for the needy
@@ -28,8 +29,6 @@ cleanup () {
     rm -rf /tmp/login.txt;
 }
 
-# This directory is where you have all your results locally, generally named as `allure-results`
-ALLURE_RESULTS_DIRECTORY='target/allure-results'
 # Project ID. Check endpoint for project creation >> `[POST]/projects`
 PROJECT_ID=${1}
 DIR=${2}
@@ -38,6 +37,8 @@ ALLURE_USER=${3}
 ALLURE_PASS=${4}
 # This url is where the Allure container is deployed. We are using localhost as example
 ALLURE_SERVER=${5:-http://localhost:5050}
+# This directory is where you have all your results locally, generally named as `allure-results`
+ALLURE_RESULTS_DIRECTORY=${6:-'target/allure-results'}
 
 while getopts hv c; do
   case $c in
