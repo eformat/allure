@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -x
+set -x
 
 usage() {
   cat <<EOF 2>&1
@@ -52,7 +52,7 @@ while getopts hv c; do
 done
 shift `expr $OPTIND - 1`
 
-if [ -z ${PROJECT_ID} ] || [ -z ${DIR} ] || [ -z ${ALLURE_USER} ] || [ -z ${ALLURE_PASS} ] || [ -z ${ALLURE_SERVER} ]; then
+if [ -z "${PROJECT_ID}" ] || [ -z "${DIR}" ] || [ -z "${ALLURE_USER}" ] || [ -z "${ALLURE_PASS}" ] || [ -z ${ALLURE_SERVER} ]; then
     usage
 fi
 
@@ -63,10 +63,10 @@ fi
 
 # login
 curl -sk -X POST "${ALLURE_SERVER}/allure-docker-service/login" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"username\": \"admin\",\"password\":\"password\"}" -ik | tr -d '\r' | tee /tmp/login.txt
-ACCESS_TOKEN=$(cat /tmp/login.txt | grep access_token_cookie | sed 's/Set-Cookie: access_token_cookie=//g' | sed 's/\; HttpOnly\; Path=\///g')
-CSRF_TOKEN=$(cat /tmp/login.txt | grep csrf_access_token | sed 's/Set-Cookie: csrf_access_token=//g' | sed 's/\; Path=\///g')
+ACCESS_TOKEN=$(cat /tmp/login.txt | grep access_token_cookie | sed 's/Set-Cookie: access_token_cookie=//gi' | sed 's/\; HttpOnly\; Path=\///gi')
+CSRF_TOKEN=$(cat /tmp/login.txt | grep csrf_access_token | sed 's/Set-Cookie: csrf_access_token=//gi' | sed 's/\; Path=\///gi')
 
-if [ -z ${ACCESS_TOKEN} ] || [ -z ${CSRF_TOKEN} ]; then
+if [ -z "${ACCESS_TOKEN}" ] || [ -z "${CSRF_TOKEN}" ]; then
     echo "Failed to login?"
     usage
 fi
