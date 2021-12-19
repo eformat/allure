@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 
 usage() {
   cat <<EOF 2>&1
