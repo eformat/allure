@@ -2,7 +2,7 @@ apiVersion: v2
 name: allure
 description: Allure Helm Chart
 type: application
-version: 1.0.1
+version: 1.0.2
 appVersion: 1.0.0
 icon: https://avatars1.githubusercontent.com/u/68044996?s=200&v=4
 maintainers:
