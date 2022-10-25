@@ -23,7 +23,6 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mountPath: /app/projects
-    storageClass: gp2
   allure_swagger:
     enabled: true
     annotations: {}
@@ -31,4 +30,3 @@ persistence:
     accessMode: ReadWriteOnce
     size: 1Gi
     mountPath: /app/allure-docker-api/static/swagger
-    storageClass: gp2
